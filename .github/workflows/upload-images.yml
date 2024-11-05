@@ -8,19 +8,25 @@ on:
 jobs:
   upload-images:
     runs-on: ubuntu-latest
+    permissions: 
+        contents: write
     steps:
     - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
+
     - name: Move images
       run: |
         mkdir -p images
         mv temp-images/* images/
     - name: Commit files
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git add images
-        git commit -m "Add new shoe images" -a
+        git commit -m "Add new shoe images" -a || echo "No changes to commit"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.PAT_TOKEN }}
+        branch: ${{ github.ref }}
