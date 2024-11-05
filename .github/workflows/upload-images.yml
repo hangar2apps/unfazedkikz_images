@@ -1,0 +1,26 @@
+name: Upload Images
+
+on:
+  push:
+    paths:
+      - 'temp-images/**'
+
+jobs:
+  upload-images:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Move images
+      run: |
+        mkdir -p images
+        mv temp-images/* images/
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add images
+        git commit -m "Add new shoe images" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
