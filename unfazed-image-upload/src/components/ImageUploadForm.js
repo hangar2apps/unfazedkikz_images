@@ -37,8 +37,11 @@ function ImageUploadForm() {
     setUploading(true);
     
     try {
-      const response = await fetch('/.netlify/functions/upload-to-github', {
+      const response = await fetch('/api/upload', {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           shoeBrand,
           shoeName,
@@ -51,8 +54,16 @@ function ImageUploadForm() {
       }
 
       const data = await response.json();
-      setUploadedImageUrl(data.url);
+      console.log('response data', data);
+
+      let url = data.url;
+      //need to add url and shoe name to blob
       
+
+
+
+      setUploadedImageUrl(data.url);
+      alert('Image uploaded successfully!');
       // Reset form
       clearForm();
     } catch (error) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageUploadForm from './components/ImageUploadForm';
+import ImageUploadForm from './components/imageUploadForm';
 import './components/CustomStyles.css';
 
 function App() {
