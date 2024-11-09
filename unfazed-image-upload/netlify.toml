@@ -8,6 +8,7 @@
   command = "npm run build"
   publish = "build"
   functions = "functions"
+  
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
